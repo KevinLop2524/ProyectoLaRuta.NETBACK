@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ProyectoLaRuta.Models.Service>
+
+@{
+    ViewData["Title"] = "Servicios";
+}
+
+<h1>Servicios</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Crear Servicio</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Usuario</th>
+            <th>Fecha creación</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Tipo</td>
+                <td>@item.Descripcion</td>
+                <td>@item.User?.Username</td>
+                <td>@item.FechaCreacion?.ToString("yyyy-MM-dd")</td>
+
+                <td>
+                    <a asp-controller="Service" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-controller="Service" asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detalles</a>
+                    <a asp-controller="Service" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>

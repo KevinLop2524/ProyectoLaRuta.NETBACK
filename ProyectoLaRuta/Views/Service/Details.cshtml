@@ -1,0 +1,30 @@
+﻿@model ProyectoLaRuta.Models.Service
+
+@{
+    ViewData["Title"] = "Detalles del Servicio";
+}
+
+<h1>Detalles del Servicio</h1>
+<hr />
+
+<div>
+    <h4>@Model.Nombre</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-2">Tipo</dt>
+        <dd class="col-sm-10">@Model.Tipo</dd>
+
+        <dt class="col-sm-2">Descripción</dt>
+        <dd class="col-sm-10">@Model.Descripcion</dd>
+
+        <dt class="col-sm-2">Usuario</dt>
+        <dd class="col-sm-10">@Model.User?.Username</dd>
+
+        <dt class="col-sm-2">Fecha Creación</dt>
+        <dd class="col-sm-10">@Model.FechaCreacion?.ToString("yyyy-MM-dd")</dd>
+    </dl>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Volver</a>
