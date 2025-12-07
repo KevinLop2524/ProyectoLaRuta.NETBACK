@@ -160,5 +160,39 @@ namespace ProyectoLaRuta.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+
+
+
+        //inicio de sesión
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u =>
+                    (u.Email == model.UsernameOrEmail || u.Username == model.UsernameOrEmail)
+                    && u.Password == model.Password);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Usuario o contraseña incorrectos");
+                return View(model);
+            }
+
+            TempData["SuccessMessage"] = "Inicio de sesión exitoso";
+
+            return RedirectToAction(nameof(Index)); // o Home/Index si quieres
+        }
+
     }
 }

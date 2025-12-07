@@ -8,7 +8,7 @@ public partial class User
 {
     public long Id { get; set; }
 
-    public ulong Active { get; set; }
+    public ulong? Active { get; set; }
 
     [Display(Name = "Fecha de nacimiento")]
 
