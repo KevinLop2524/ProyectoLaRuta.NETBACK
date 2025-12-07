@@ -29,7 +29,7 @@ public partial class Post
 
     public long? UsuarioDestinoId { get; set; }
 
-    public ulong HasMedia { get; set; }
+    public ulong? HasMedia { get; set; }
 
     public string? ImagePublicId { get; set; }
 
