@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace ProyectoLaRuta.Models;
 
@@ -7,21 +9,25 @@ public partial class Community
 {
     public long Id { get; set; }
 
-    public ulong Active { get; set; }
+    public bool Active { get; set; }
 
-    public string Category { get; set; } = null!;
-
+    [Required(ErrorMessage = "La categoría es obligatoria.")]
+    public string Category { get; set; }
     public DateTime? DateOfCreation { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
-    public string Description { get; set; } = null!;
+    [Required(ErrorMessage = "La descripción es obligatoria.")]
+    [StringLength(500, ErrorMessage = "La descripción debe tener máximo 500 caracteres.")]
+    public string Description { get; set; }
 
-    public string Name { get; set; } = null!;
+    [Required(ErrorMessage = "El nombre es obligatorio.")]
+    [StringLength(100, ErrorMessage = "El nombre no puede superar 100 caracteres.")]
+    public string Name { get; set; }
 
     public long CreatorId { get; set; }
 
-    public ulong AllowsPosts { get; set; }
+    public bool AllowsPosts { get; set; }
 
     public string? PostRules { get; set; }
 

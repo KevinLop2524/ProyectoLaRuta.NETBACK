@@ -53,16 +53,29 @@ namespace ProyectoLaRuta.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Active,Category,DateOfCreation,DeletedAt,Description,Name,CreatorId,AllowsPosts,PostRules,BannerPublicId,BannerUrl,LogoPublicId,LogoUrl")] Community community)
+        public async Task<IActionResult> Create(Community community)
         {
             if (ModelState.IsValid)
             {
+                community.Active = true;                     
+                community.DateOfCreation = DateTime.Now;      
+                community.DeletedAt = null;                   
+
+                community.CreatorId = 1;
+
+                community.BannerPublicId = null;
+                community.BannerUrl = null;
+                community.LogoPublicId = null;
+                community.LogoUrl = null;
+
                 _context.Add(community);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(community);
         }
+
 
         // GET: Communities/Edit/5
         public async Task<IActionResult> Edit(long? id)
@@ -85,35 +98,33 @@ namespace ProyectoLaRuta.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Active,Category,DateOfCreation,DeletedAt,Description,Name,CreatorId,AllowsPosts,PostRules,BannerPublicId,BannerUrl,LogoPublicId,LogoUrl")] Community community)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Active,Category,Description,Name,AllowsPosts,PostRules,BannerPublicId,BannerUrl,LogoPublicId,LogoUrl")] Community data)
         {
-            if (id != community.Id)
-            {
-                return NotFound();
-            }
+            if (!ModelState.IsValid)
+                return View(data);
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(community);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CommunityExists(community.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(community);
+            var community = await _context.Communities.FindAsync(id);
+
+            if (community == null)
+                return NotFound();
+
+
+            community.Name = data.Name;
+            community.Description = data.Description;
+            community.Category = data.Category;
+            community.AllowsPosts = data.AllowsPosts;
+            community.PostRules = data.PostRules;
+            community.Active = data.Active;
+            community.BannerPublicId = data.BannerPublicId;
+            community.BannerUrl = data.BannerUrl;
+            community.LogoPublicId = data.LogoPublicId;
+            community.LogoUrl = data.LogoUrl;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Communities/Delete/5
         public async Task<IActionResult> Delete(long? id)

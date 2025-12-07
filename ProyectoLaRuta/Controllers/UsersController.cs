@@ -53,16 +53,24 @@ namespace ProyectoLaRuta.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Active,DateOfBirth,DateOfCreation,DeletedAt,Email,FirstName,Gender,Height,LastName,Password,Role,SecondLastName,SecondName,Username,Weight,EmailVerified,PasswordUpdatedAt,ResetPasswordToken,ResetPasswordTokenExpiry,VerificationToken,VerificationTokenExpiry,AvatarPublicId,AvatarUrl,BannerPublicId,BannerUrl")] User user)
+        public async Task<IActionResult> Create(User user)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(user);
             }
-            return View(user);
+
+            user.Active = 1;
+            user.EmailVerified = 0;
+            user.DateOfCreation = DateTime.UtcNow;
+            user.Role = "CLIENT";
+
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(long? id)

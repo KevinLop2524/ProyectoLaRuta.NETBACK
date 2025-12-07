@@ -15,7 +15,7 @@ namespace ProyectoLaRuta.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Create", "Users");
         }
 
         public IActionResult Privacy()

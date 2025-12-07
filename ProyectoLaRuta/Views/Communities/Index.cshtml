@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Comunidades</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -36,23 +36,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.AllowsPosts)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostRules)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BannerPublicId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BannerUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LogoPublicId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LogoUrl)
-            </th>
-            <th></th>
-        </tr>
+           </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
